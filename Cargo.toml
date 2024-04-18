@@ -27,20 +27,20 @@ all-features = true
 # Features
 #
 [features]
-default = ["bracketed-paste", "windows", "events"]
+default = ["bracketed-paste", "windows", "events","event-stream"]
 windows = ["dep:winapi", "dep:crossterm_winapi"] # Disables winapi dependencies from being included into the binary (SHOULD NOT be disabled on windows).
 bracketed-paste = [] # Enables triggering a `Event::Paste` when pasting text into the terminal.
 event-stream = ["dep:futures-core", "events"] # Enables async events
 use-dev-tty = ["filedescriptor"] # Enables raw file descriptor polling / selecting instead of mio.
 events = ["dep:mio", "dep:signal-hook", "dep:signal-hook-mio"] # Enables reading input/events from the system.
 serde = ["dep:serde", "bitflags/serde"] # Enables 'serde' for various types.
-
 #
 # Shared dependencies
 #
 [dependencies]
 bitflags = {version = "2.3" }
 parking_lot = "0.12"
+tokio = {version = "1.37.0"}
 
 # optional deps only added when requested
 futures-core = { version = "0.3", optional = true, default-features = false }

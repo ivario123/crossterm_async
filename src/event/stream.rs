@@ -11,6 +11,7 @@ use std::{
     time::Duration,
 };
 
+use std::future::poll_fn;
 use futures_core::stream::Stream;
 
 use crate::event::{
@@ -78,6 +79,13 @@ struct Task {
     stream_waker: std::task::Waker,
     stream_wake_task_executed: Arc<AtomicBool>,
     stream_wake_task_should_shutdown: Arc<AtomicBool>,
+}
+
+impl EventStream {
+    pub async fn next(mut self: Pin<&mut Self>) -> Option<io::Result<Event>> {
+        poll_fn(|cx| self.as_mut().poll_next(cx)).await
+    }
+
 }
 
 // Note to future me
